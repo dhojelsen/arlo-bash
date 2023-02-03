@@ -35,6 +35,8 @@ IMAP_HOST="imap.example.com"
 Example interaction:
 ```
 ./arlo_devices.sh
+./arlo_arm.sh [DEVICEID]
+./arlo_disarm.sh [DEVICEID]
 ```
 
 Once logged in the session is stored in the session.txt until it automatically renews upon expiry.

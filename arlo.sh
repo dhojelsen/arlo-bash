@@ -151,6 +151,26 @@ function mfaLogin() {
 	echo "ARLO_EXPIRY=$AUTH_EXPIRY" >> ./session.txt
 }
 
+function call() {
+
+	ARGS=()
+
+	# post json if supplied
+	if [ $# -eq 2 ]; then
+		ARGS+="-d ""$2"""
+	fi 
+
+	curl -H 'content-type: application/json; charset=UTF-8' \
+     	 -H 'origin: https://my.arlo.com' \
+     	 -H 'referer: https://my.arlo.com/' \
+     	 -H 'auth-version: 2' \
+	 	 -H 'schemaversion: 1' \
+      	 -H "authorization: $ARLO_TOKEN" \
+     	"https://myapi.arlo.com$1" \
+		"${ARGS[@]}"
+
+} 
+
 # is session expired
 if [ "$ARLO_EXPIRY" -lt "$(date +%s)" ]; then
 	mfaLogin
