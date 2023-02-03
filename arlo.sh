@@ -160,7 +160,8 @@ function call() {
 		ARGS+="-d ""$2"""
 	fi 
 
-	curl -H 'content-type: application/json; charset=UTF-8' \
+	curl -s \
+		 -H 'content-type: application/json; charset=UTF-8' \
      	 -H 'origin: https://my.arlo.com' \
      	 -H 'referer: https://my.arlo.com/' \
      	 -H 'auth-version: 2' \
