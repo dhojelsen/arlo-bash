@@ -65,7 +65,7 @@ expect {
     "tag OK"
 }
 puts $expect_out(buffer)
-' | egrep '\t+[0-9]{6}' | tr -dc "0-9"
+' | sed -n '/\t*\t[0-9]/p' | tr -dc "0-9"
 
 }
 
