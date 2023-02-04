@@ -84,20 +84,6 @@ function auth() {
 
 }
 
-function auth() {
-	
-	# base64 password
-	ARLO_PWD_B64="$(echo -n $ARLO_PWD | base64)"	
-	
-	curl -s -H 'content-type: application/json; charset=UTF-8' \
-		-H 'origin: https://my.arlo.com' \
-		-H 'referer: https://my.arlo.com/' \
-		https://ocapi-app.arlo.com/api/auth \
-		-d '{"email": "'$ARLO_USER'", "password": "'$ARLO_PWD_B64'" }' \
-		| jq -rc '[.data.token, .data.userId] | @tsv'
-		
-
-}
 
 function getFactor() {
 
