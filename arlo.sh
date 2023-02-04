@@ -72,7 +72,7 @@ puts $expect_out(buffer)
 function auth() {
 	
 	# base64 password
-	ARLO_PWD_B64="$(echo -n $ARLO_PWD | base64)"	
+	ARLO_PWD_B64="$(echo -n $ARLO_PWD | openssl enc -A -base64)"	
 	
 	curl -s -H 'content-type: application/json; charset=UTF-8' \
 		-H 'origin: https://my.arlo.com' \
@@ -124,7 +124,7 @@ function mfaLogin() {
 	read ARLO_MFATOKEN ARLO_USERID < <(auth)
 
 	# encode token
-	ARLO_MFATOKEN_B64="$(echo -n $ARLO_MFATOKEN | base64)"	
+	ARLO_MFATOKEN_B64="$(echo -n $ARLO_MFATOKEN | openssl enc -A -base64)"	
 
 	read ARLO_FACTORID < <(getFactor)
 	read ARLO_FACTORCODE < <(startAuth)
