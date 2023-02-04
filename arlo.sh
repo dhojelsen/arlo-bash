@@ -15,7 +15,7 @@ command -v openssl >/dev/null 2>&1 || { echo >&2 "openssl is required but it's n
 source ./arlo.conf
 
 # define global variables
-AUTH_EXPIRY=0
+AUTH_EXPIRY="0"
 ARLO_MFATOKEN=""
 ARLO_USERID=""
 ARLO_MFATOKEN_B64=""
