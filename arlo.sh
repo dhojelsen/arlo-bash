@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # cd to dir
-cd $(dirname -- "$0")
+#cd $(dirname -- "$0")
 
 # check for bin
 command -v jq >/dev/null 2>&1 || { echo >&2 "jq is required but it's not installed.  Aborting."; exit 1; }

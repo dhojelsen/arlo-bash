@@ -16,4 +16,5 @@ call /hmsweb/users/devices/automation/active "$(cat <<JSON
      }
      ]
 }
-JSON)"
+JSON
+)"
