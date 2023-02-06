@@ -42,6 +42,14 @@ Example interaction:
 Once logged in the session is stored in the session.txt until it automatically renews upon expiry.
 
 
+## Mimic geofencing arming/disarming
+
+If you are not comfortable with ARLO always knowing your location on you mobile device, this is an excellent alternative. By monitoring your home network for you mac addresses, this script can arm/disarm a camera
+
+```
+./monitor.sh "./arlo_disarm.sh DEVICEID" "./arlo_arm.sh DEVICEID" MACADDRESS [MACADDRESS]
+```
+
 ## login process with 2FA
 
 Arlo requires 2Factor authentication for logins. Below is a diagram of the process
