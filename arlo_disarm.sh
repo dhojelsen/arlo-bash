@@ -10,7 +10,7 @@ call /hmsweb/users/devices/automation/active "$(cat <<JSON
 {"activeAutomations": [
      {
           "deviceId": "$1",
-          "timestamp": $(date +%s),
+          "timestamp": $(date +%s)324,
           "activeModes": ["mode0"],
           "activeSchedules": []
      }
