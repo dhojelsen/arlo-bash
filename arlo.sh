@@ -74,13 +74,12 @@ function auth() {
 	# base64 password
 	ARLO_PWD_B64="$(echo -n $ARLO_PWD | openssl enc -A -base64)"	
 
- 	echo curl -s -H 'content-type: application/json; charset=UTF-8' \
+ 	bin/curl_chrome110 -s -H 'content-type: application/json; charset=UTF-8' \
 		-H 'origin: https://my.arlo.com' \
 		-H 'referer: https://my.arlo.com/' \
 		https://ocapi-app.arlo.com/api/auth \
-		-d '{"email": "'$ARLO_USER'", "password": "'$ARLO_PWD_B64'" }'  >&2
-		       #	\
-		#| jq -rc '[.data.token, .data.userId] | @tsv'
+		-d '{"email": "'$ARLO_USER'", "password": "'$ARLO_PWD_B64'" }' \
+		| jq -rc '[.data.token, .data.userId] | @tsv'
 		
 
 }
@@ -88,7 +87,7 @@ function auth() {
 
 function getFactor() {
 
-	curl -s -H 'content-type: application/json; charset=UTF-8' \
+	bin/curl_chrome110 -s -H 'content-type: application/json; charset=UTF-8' \
      -H 'origin: https://my.arlo.com' \
      -H 'referer: https://my.arlo.com/' \
      -H "authorization: $ARLO_MFATOKEN_B64" \
@@ -99,7 +98,7 @@ function getFactor() {
 
 function startAuth() {
 	
-	curl -s -H 'content-type: application/json; charset=UTF-8' \
+	bin/curl_chrome110 -s -H 'content-type: application/json; charset=UTF-8' \
      -H 'origin: https://my.arlo.com' \
      -H 'referer: https://my.arlo.com/' \
      -H "authorization: $ARLO_MFATOKEN_B64" \
@@ -110,7 +109,7 @@ function startAuth() {
 
 function finishAuth() {
 	
-	curl -s -H 'content-type: application/json; charset=UTF-8' \
+	bin/curl_chrome110 -s -H 'content-type: application/json; charset=UTF-8' \
      -H 'origin: https://my.arlo.com' \
      -H 'referer: https://my.arlo.com/' \
      -H "authorization: $ARLO_MFATOKEN_B64" \
@@ -147,7 +146,7 @@ function call() {
 		ARGS+="-d ""$2"""
 	fi 
 
-	curl -s \
+	bin/curl_chrome110 -s \
 		 -H 'content-type: application/json; charset=UTF-8' \
      	 -H 'origin: https://my.arlo.com' \
      	 -H 'referer: https://my.arlo.com/' \
