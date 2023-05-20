@@ -6,10 +6,12 @@ cd $(dirname -- "$0")
 source ./arlo.sh
 
 # disarm device
-call /hmsweb/users/devices/automation/active "$(cat <<JSON
+for deviceId in "$@"
+do
+     call /hmsweb/users/devices/automation/active "$(cat <<JSON
 {"activeAutomations": [
      {
-          "deviceId": "$1",
+          "deviceId": "$deviceId",
           "timestamp": $(date +%s)324,
           "activeModes": ["mode0"],
           "activeSchedules": []
@@ -18,3 +20,4 @@ call /hmsweb/users/devices/automation/active "$(cat <<JSON
 }
 JSON
 )"
+done
