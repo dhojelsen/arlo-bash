@@ -34,7 +34,8 @@ while true; do
 				echo "$MAC Arrived"
 				# if ARR_MAC length is 0 then execute arrive command
 				if [ "$MAC_PRESENT" -eq 0 ]; then
-					echo "$($CMD_ARRIVE)";
+					echo "$CMD_ARRIVE"
+					echo "$($CMD_ARRIVE)"
 				fi	
 				ARR_MAC+=("$MAC")
 				((MAC_PRESENT=MAC_PRESENT+1))
