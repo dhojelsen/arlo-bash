@@ -16,6 +16,7 @@ State of the project:
 `expect`
 `jq`
 `openssl`
+`curl-impersonate` https://github.com/lwthiker/curl-impersonate 
 
 ## Usage
 
