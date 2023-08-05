@@ -27,6 +27,11 @@ ARLO_TOKEN=""
 # load session if it exists
 source ./session.txt 2> /dev/null
 
+# if empty
+if [ -z $ARLO_EXPIRY ]; then
+	ARLO_EXPIRY="0"
+fi
+
 # defining functions
 function waitForPin() {
 
@@ -65,7 +70,7 @@ expect {
     "tag OK"
 }
 puts $expect_out(buffer)
-' | sed -n '/\t*\t[0-9]/p' | tr -dc "0-9"
+' | sed -n '/\s\+[0-9]\{6\}/p' | tr -dc "0-9"
 
 }
 
@@ -73,7 +78,7 @@ function auth() {
 	
 	# base64 password
 	ARLO_PWD_B64="$(echo -n $ARLO_PWD | openssl enc -A -base64)"	
-
+	
  	bin/curl_chrome110 -s -H 'content-type: application/json; charset=UTF-8' \
 		-H 'origin: https://my.arlo.com' \
 		-H 'referer: https://my.arlo.com/' \
@@ -120,6 +125,7 @@ function finishAuth() {
 }
 
 function mfaLogin() {
+	
 	# call auth and set variables
 	read ARLO_MFATOKEN ARLO_USERID < <(auth)
 
@@ -127,9 +133,13 @@ function mfaLogin() {
 	ARLO_MFATOKEN_B64="$(echo -n $ARLO_MFATOKEN | openssl enc -A -base64)"	
 
 	read ARLO_FACTORID < <(getFactor)
+	>&2 echo "Got ARLO_FACTORID $ARLO_FACTORID"
 	read ARLO_FACTORCODE < <(startAuth)
+	>&2 echo "Got ARLO_FACTORCODE $ARLO_FACTORCODE"
 	read ARLO_PIN < <(waitForPin)
+	>&2 echo "Got ARLO_PIN $ARLO_PIN"
 	read ARLO_TOKEN AUTH_EXPIRY ARLO_USERID < <(finishAuth)
+	>&2 echo "Got ARLO_TOKEN $ARLO_TOKEN"
 
 	# store in session
 	echo "ARLO_TOKEN=$ARLO_TOKEN" > ./session.txt
@@ -159,6 +169,6 @@ function call() {
 } 
 
 # is session expired
-if [ "$ARLO_EXPIRY" -lt "$(date +%s)" ]; then
+if [ $ARLO_EXPIRY -lt $(date +%s) ]; then
 	mfaLogin
 fi
